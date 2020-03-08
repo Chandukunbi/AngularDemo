@@ -1,0 +1,58 @@
+﻿<student-count [all]="getTotalStudentsCount()"
+               [male]="getMaleStudentsCount()"
+               [female]="getFemaleStudentsCount()"
+(countRadioButtonSelectionChanged)="onStudentCountRadioButtonChange($event)">
+</student-count>
+<br/><br/>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Branch</th>
+            <th>DOB FullDate</th>
+            <th>DOB (DD|MM|YYYY)</th>
+            <th>Course Fee</th>
+            <th>Gender</th>
+            <th>Mobile</th>
+            <!--<th>Index</th>
+            <th>IsFirst</th>
+            <th>IsLast</th>
+            <th>IsEven</th>
+            <th>IsOdd</th>-->
+        </tr>
+    </thead>
+    <tbody>
+        <!--let student of students; trackBy:trackByStudentID; let i=index;
+        let isFirst=first; let isLast=last; let isEven = even; let isOdd = odd'-->
+        <ng-container *ngFor="let student of students;">
+            <tr *ngIf="selectedStudentCountRadioButton=='All' ||
+                       selectedStudentCountRadioButton==student.Gender">
+                <td>{{student.ID}}</td>
+                <td>{{student.FirstName | studentTitle:student.Gender }}</td>
+                <td>{{student.LastName | lowercase }}</td>
+                <td>{{student.Branch}}</td>
+                <td>{{student.DOB | date:'fullDate' | uppercase }}</td>
+                <td>{{student.DOB | date:'dd/MM/y'}}</td>
+                <td>{{student.CourseFee | currency:'USD':true:'1.2-2'}}</td>
+                <td>{{student.Gender}}</td>
+                <td>{{student.Mobile}}</td>
+                <!--<td>{{i}}</td>
+                <td>{{isFirst}}</td>
+                <td>{{isLast}}</td>
+                <td>{{isEven}}</td>
+                <td>{{isOdd}}</td>-->
+            </tr>
+        </ng-container>
+
+        <tr *ngIf="!students || students.length==0">
+            <td colspan="13">
+                No Students to display
+            </td>
+        </tr>
+    </tbody>
+</table>
+<br/>
+<button (click)='getStudents()'>Refresh Students</button>
